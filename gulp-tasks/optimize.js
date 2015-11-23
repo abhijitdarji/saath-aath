@@ -22,6 +22,9 @@ module.exports = function (args, gulp, $, config, util) {
 			.pipe(assets) // Gather all assets from the html with useref
         // Get the css
 			.pipe(cssFilter)
+			.pipe($.cssUrlAdjuster({
+				replace: ['/src/client', ''],
+			}))
 			.pipe($.minifyCss())
 			.pipe(cssFilter.restore())
         // Get the custom javascript

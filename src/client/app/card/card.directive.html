@@ -1,5 +1,0 @@
-<md-card class="card md-whiteframe-3dp {{vm.suit}} {{vm.cardIndexClass}}" ng-class="{'md-whiteframe-15dp' : vm.hoverCard}"
-ng-if="!vm.card.hideValue" ng-mouseenter="vm.toggleHover()" ng-mouseleave="vm.toggleHover()" ng-click="vm.onCardSelected()">
-	<p>{{vm.rank}}</p>
-</md-card>
-<md-card class="card back" ng-class="vm.cardIndexClass" ng-if="vm.card.hideValue"></md-card>

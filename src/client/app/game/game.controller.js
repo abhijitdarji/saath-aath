@@ -29,8 +29,8 @@
          * Starts a game by creating a new player
          */
         game.start = function () {
-            game.player1 = PlayerService.newPlayer('ARD', 0);
-            game.player2 = PlayerService.newPlayer('BRD', 0);
+            game.player1 = PlayerService.newPlayer('Player1', 0);
+            game.player2 = PlayerService.newPlayer('Player2', 0);
             game.players = [game.player1, game.player2];
             game.currentPlayer;
             game.currentPlayCards = [];

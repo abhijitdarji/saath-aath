@@ -30,7 +30,7 @@
 
             deck.suits.forEach(function (suit) {
                 deck.ranks.forEach(function (rank) {
-                    if (deck.ignoredCards.indexOf(rank) === -1 && deck.ignoredCards.indexOf(rank + suit) === -1) {
+                    if (deck.ignoredCards.indexOf(rank.symbol) === -1 && deck.ignoredCards.indexOf(rank.symbol + suit.name) === -1) {
                         var card = new Card(rank, suit);
                         deck.cards.push(card);
                     }
@@ -40,11 +40,106 @@
             deck.shuffle();
         }
 
-        Deck.prototype.suits = ['C', 'D', 'S', 'H'];
+        var SUIT = {
+            club: {
+                name: 'club',
+                symbol: '♣',
+                color: 'black'
+            },
+            diamond: {
+                name: 'diamond',
+                symbol: '♦',
+                color: 'red'
+            },
+            spade: {
+                name: 'spade',
+                symbol: '♠',
+                color: 'black'
+            },
+            heart: {
+                name: 'heart',
+                symbol: '♥',
+                color: 'red'
+            }
+        };
 
-        Deck.prototype.ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+        var SUITS = [SUIT.club, SUIT.diamond, SUIT.spade, SUIT.heart];
 
-        Deck.prototype.ignoredCards = ['2', '3', '4', '5', '6', '7C', '7D'];
+        var RANK = {
+            ace: {
+                name: 'ace',
+                symbol: 'A',
+                value: 14
+            },
+            two: {
+                name: 'two',
+                symbol: '2',
+                value: 2
+            },
+            three: {
+                name: 'three',
+                symbol: '3',
+                value: 3
+            },
+            four: {
+                name: 'four',
+                symbol: '4',
+                value: 4
+            },
+            five: {
+                name: 'five',
+                symbol: '5',
+                value: 5
+            },
+            six: {
+                name: 'six',
+                symbol: '6',
+                value: 6
+            },
+            seven: {
+                name: 'seven',
+                symbol: '7',
+                value: 7
+            },
+            eight: {
+                name: 'eight',
+                symbol: '8',
+                value: 8
+            },
+            nine: {
+                name: 'nine',
+                symbol: '9',
+                value: 9
+            },
+            ten: {
+                name: 'ten',
+                symbol: '10',
+                value: 10
+            },
+            jack: {
+                name: 'jack',
+                symbol: 'J',
+                value: 11
+            },
+            queen: {
+                name: 'queen',
+                symbol: 'Q',
+                value: 12
+            },
+            king: {
+                name: 'king',
+                symbol: 'K',
+                value: 13
+            }
+        };
+
+        var RANKS = [RANK.ace, RANK.two, RANK.three, RANK.four, RANK.five, RANK.six, RANK.seven, RANK.eight, RANK.nine, RANK.ten, RANK.jack, RANK.queen, RANK.king];
+
+        Deck.prototype.suits = SUITS;
+
+        Deck.prototype.ranks = RANKS;
+
+        Deck.prototype.ignoredCards = ['2', '3', '4', '5', '6', '7club', '7diamond'];
 
         Deck.prototype.deal = function () {
             var card = this.cards.shift();

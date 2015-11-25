@@ -58,7 +58,7 @@
                     card = game.deck.deal();
                     player = game.nextPlayer();
 
-                    if (card.rank !== 'J' && card.suit !== 'H') {
+                    if (card.rank.name !== 'jack' && card.suit.name !== 'hearts') {
                         loop.next();
                     }
                     else {
@@ -126,16 +126,16 @@
             //UTF-8 character value
             switch (escape(game.trump)) {
                 case '%u2663':
-                    suit = 'C'
+                    suit = 'club'
                     break;
                 case '%u2666':
-                    suit = 'D'
+                    suit = 'diamond'
                     break;
                 case '%u2660':
-                    suit = 'S'
+                    suit = 'spade'
                     break;
                 case '%u2665':
-                    suit = 'H'
+                    suit = 'heart'
                     break;
                 default:
                     break;
@@ -146,6 +146,7 @@
 
         game.play = function (card, player) {
             var end = false;
+
             if (game.currentPlayer === player) {
 
                 game.currentPlayCards.push(game.currentPlayer.playCard(card))

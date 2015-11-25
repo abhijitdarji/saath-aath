@@ -2,6 +2,9 @@
 @basevalue:1;
 @val: 1;
 @setUnit: unit(@basevalue*@val, @unit);
+@cardem: ~`function(a) { return (a/200)*16+'em'; }`;
+@suit-size: 5.8em;
+@suitem: ~`function(a) { return ((a/200)*16)/5.8+'em'; }`;
 
 .transform(@n){
   -ms-transform: @arguments;
@@ -178,6 +181,13 @@ html,body { height: 100%;}
     position: relative;
     height: 180px;
     margin-left: 500px;
+    font-size: 8px;
+}
+
+@media only screen and (max-width:500px) {
+	.playingCards{
+		font-size: 5px;
+	}
 }
 
 .compareCards {
@@ -185,6 +195,7 @@ html,body { height: 100%;}
     height: 400px;
     margin-top: -90px;
     margin-left: 300px;
+    font-size: 8px;
 }
 
 .compareCards .compare-index-0 {
@@ -200,12 +211,156 @@ html,body { height: 100%;}
 }
 
 .card {
-    @val: 8;
-    margin-right: 10px;
-    width: @setUnit;
-    height: 180px;
-    background: #fff;
-    border-radius: 7px;
+  width: ~`cardem(200)`;
+  height: ~`cardem(280)`;
+  margin: 0 ~`cardem(15)` ~`cardem(15)` 0;
+  
+  .card-back{
+    img{
+      width: ~`cardem(200)`;
+      height: ~`cardem(280)`;
+    }
+  }
+  
+   .flipped{
+        .transform(rotateY(180deg))
+    }
+  
+   .corner{
+    line-height: 1;
+    position: absolute;
+    text-align: center;
+        span{
+        display: block;
+        font-size: 1.5em;
+        font-weight: bold;
+        }
+        .number{
+        font-size: 2em;
+        height: ~`cardem(24)` / 2;
+        line-height: ~`cardem(24)` / 2;
+        }
+        &.top{
+        left: ~`cardem(8)`;
+        top: ~`cardem(12)`;
+        }
+        &.bottom{
+        bottom: ~`cardem(12)`;
+        right: ~`cardem(8)`;
+        .transform(rotate(180deg));
+        }
+   }
+   
+   .card-ace span.suit.middle_center{
+    font-size: ~`cardem(128)`;
+    left: ~`suitem(33)`;
+    top: ~`suitem(43)`;
+   }
+
+  .card-ten .corner .number{
+    font-size: 1.5em;
+  }
+
+  .face img {
+    position: absolute;
+    left:  ~`cardem(32)`;
+    top:   ~`cardem(26)`;
+    width: ~`cardem(135)`;
+    height: ~`cardem(228)`;
+  }
+  
+  
+  .suit{
+    font-size: @suit-size;
+    font-weight: normal; // bold
+    width: ~`suitem(50)`; // suitem(50)
+    height: ~`suitem(57)`; // suitem(60)
+    line-height: ~`suitem(57)`; // suitem(60)
+    // overflow: hidden
+    position: absolute;
+    text-align: center;
+
+    &.top_center{
+      left: ~`suitem(76)`;
+      top: ~`suitem(24)`;
+    }
+
+    &.top_left{
+      left: ~`suitem(30)`;
+      top: ~`suitem(24)`;
+    }
+
+    &.top_right{
+      right: ~`suitem(30)`;
+      top: ~`suitem(24)`;
+    }
+    
+    &.middle_center{
+      left: ~`suitem(76)`;
+      top: ~`suitem(110)`;
+    }
+    
+    &.middle_top{
+      left: ~`suitem(76)`;
+      top: ~`suitem(70)`;
+    }
+    &.middle_bottom{
+      bottom: ~`suitem(70)`;
+      left: ~`suitem(76)`;
+      .transform(rotate(180deg));
+    }
+    &.middle_left{
+      left: ~`suitem(30)`;
+      top: ~`suitem(110)`;
+    }
+    &.middle_right{
+      right: ~`suitem(30)`;
+      top: ~`suitem(110)`;
+    }
+    &.middle_top_center{
+      left: ~`suitem(76)`;
+      top: ~`suitem(60)`;
+    }
+    &.middle_top_left{
+      left: ~`suitem(30)`;
+      top: ~`suitem(80)`;
+    }
+    &.middle_top_right{
+      right: ~`suitem(30)`;
+      top: ~`suitem(80)`;
+    }
+    &.middle_bottom_left{
+      bottom: ~`suitem(80)`;
+      left: ~`suitem(30)`;
+      .transform(rotate(180deg));
+    }
+    &.middle_bottom_right{
+      bottom: ~`suitem(80)`;
+      right: ~`suitem(30)`;
+      .transform(rotate(180deg));
+    }
+    &.middle_bottom_center{
+      bottom: ~`suitem(60)`;
+      left: ~`suitem(76)`;
+      .transform(rotate(180deg));
+    }
+    &.bottom_center{
+      bottom: ~`suitem(24)`;
+      left: ~`suitem(76)`;
+      .transform(rotate(180deg));
+    }
+    &.bottom_left{
+      bottom: ~`suitem(24)`;
+      left: ~`suitem(30)`;
+      .transform(rotate(180deg));
+    }
+    &.bottom_right{
+      bottom: ~`suitem(24)`;
+      right: ~`suitem(30)`;
+      .transform(rotate(180deg));
+     }
+  }
+
 }
 
 .generate-columns(12);
@@ -213,20 +368,13 @@ html,body { height: 100%;}
 .generate-columns(@n, @i: 0) when (@i =< @n) {
   .card-index-@{i} {
       position: absolute;
-      left:  160px*@i;
+      left:  150px*@i;
   }
   .generate-columns(@n, (@i + 1));
 }
 
 
-.card p {
-    font-size: 35px;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 35px;
-    text-align: center;
-}
+
 
 .card.back {
     background-color: #800080;
@@ -234,50 +382,3 @@ html,body { height: 100%;}
     /** Background from http://www.transparenttextures.com/ **/
 }
 
-.suitdiamonds {
-    color: #ff0000;
-}
-
-.suitdiamonds:before, .suitdiamonds:after {
-    content: "♦";
-}
-
-.suithearts {
-    color: #ff0000;
-}
-
-.suithearts:before, .suithearts:after {
-    content: "♥";
-}
-
-.suitclubs {
-    color: #000;
-}
-
-.suitclubs:before, .suitclubs:after {
-    content: "♣";
-}
-
-.suitspades {
-    color: #000;
-}
-
-.suitspades:before, .suitspades:after {
-    content: "♠";
-}
-
-md-card[class*='suit']:before {
-    position: absolute;
-    font-size: 35px;
-    width: 35px;
-    left: 0px;
-    top: 30px;
-    text-align: center;
-}
-
-md-card[class*='suit']:after {
-    position: absolute;
-    font-size: 35px;
-    right: 10px;
-    bottom: 1px;
-}

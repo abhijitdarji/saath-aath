@@ -19,30 +19,18 @@
 
        
         function checkWinningCard(cardA, cardB, trump) {
-            var faceRanks = ['J', 'Q', 'K', 'A'];
-            var faceValues = {
-                'J': 10,
-                'Q': 11,
-                'K': 12,
-                'A': 13
-            }
 
-            if (cardA.suit === trump && cardB.suit !== trump) {
+            if (cardA.suit.name === trump && cardB.suit.name !== trump) {
                 return cardA;
             }
-            else if (cardA.suit !== trump && cardB.suit === trump) {
+            else if (cardA.suit.name !== trump && cardB.suit.name === trump) {
                 return cardB;
             }
-            else if (cardB.suit !== cardA.suit) {
+            else if (cardB.suit.name !== cardA.suit.name) {
                 return cardA;
             }
             else {
-                var rank1, rank2;
-
-                rank1 = faceRanks.indexOf(cardA.rank) !== -1 ? Number(faceValues[cardA.rank]) : Number(cardA.rank)
-                rank2 = faceRanks.indexOf(cardB.rank) !== -1 ? Number(faceValues[cardB.rank]) : Number(cardB.rank)
-
-                return rank1 > rank2 ? cardA : cardB;
+                return cardA.rank.value > cardB.rank.value ? cardA : cardB;
             }
         }
 

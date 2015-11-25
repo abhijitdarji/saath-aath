@@ -1,5 +1,40 @@
-<md-card class="card md-whiteframe-3dp {{vm.suit}} {{vm.cardIndexClass}}" ng-class="{'md-whiteframe-15dp' : vm.hoverCard}"
-ng-if="!vm.card.hideValue" ng-mouseenter="vm.toggleHover()" ng-mouseleave="vm.toggleHover()" ng-click="vm.onCardSelected()">
-	<p>{{vm.rank}}</p>
+<md-card class="card md-whiteframe-3dp {{vm.cardIndexClass}}" ng-class="{'md-whiteframe-15dp' : vm.hoverCard}" ng-if="!vm.card.hideValue" ng-mouseenter="vm.toggleHover()"
+ng-mouseleave="vm.toggleHover()" ng-click="vm.onCardSelected()">
+	<div class="card-{{vm.card.rank.name}}" style="color:{{vm.card.suit.color}}">
+		<div class="corner top">
+			<span class="number">{{vm.card.rank.symbol}}</span>
+			<span>{{vm.card.suit.symbol}}</span>
+		</div>
+
+		<!--number cards-->
+		<span class="suit top_left" ng-if="([4,5,6,7,8,9,10].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit top_center" ng-if="([2].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit top_right" ng-if="([4,5,6,7,8,9,10].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit middle_top_left" ng-if="([9,10].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit middle_top_center" ng-if="([10].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit middle_left" ng-if="([6,7,8].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit middle_top" ng-if="([7,8].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit middle_center" ng-if="([3,5,9].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit middle_top_right" ng-if="([9,10].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit middle_bottom" ng-if="([8].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit middle_right" ng-if="([6,7,8].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit bottom_left" ng-if="([4,5,6,7,8,9,10].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit bottom_center" ng-if="([2].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit bottom_right" ng-if="([4,5,6,7,8,9,10].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit middle_bottom_left" ng-if="([9,10].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit middle_bottom_center" ng-if="([10].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+		<span class="suit middle_bottom_right" ng-if="([9,10].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+
+		<!--jack, queen, king-->
+		<span class="face middle_center" ng-if="([11,12,13].indexOf(vm.card.rank.value) > -1)"><img ng-src="images/faces/face-{{vm.card.rank.name}}-{{vm.card.suit.name}}.png"/></span>
+
+		<!--ace-->
+		<span class="suit middle_center" ng-if="([14].indexOf(vm.card.rank.value) > -1)">{{vm.card.suit.symbol}}</span>
+
+		<div class="corner bottom">
+			<span class="number">{{vm.card.rank.symbol}}</span>
+			<span>{{vm.card.suit.symbol}}</span>
+		</div>
+	</div>
 </md-card>
 <md-card class="card back" ng-class="vm.cardIndexClass" ng-if="vm.card.hideValue"></md-card>

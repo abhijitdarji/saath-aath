@@ -2,9 +2,9 @@
 @basevalue:1;
 @val: 1;
 @setUnit: unit(@basevalue*@val, @unit);
-@cardem: ~`function(a) { return (a/200)*16+'em'; }`;
+@cardem: ~`cardem = function(a) { return (a/200)*16+'em'; }`;
 @suit-size: 5.8em;
-@suitem: ~`function(a) { return ((a/200)*16)/5.8+'em'; }`;
+@suitem: ~`suitem = function(a) { return ((a/200)*16)/5.8+'em'; }`;
 
 .transform(@n){
   -ms-transform: @arguments;

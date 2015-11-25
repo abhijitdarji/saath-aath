@@ -77,7 +77,7 @@
 
             game.deal();
         }
-        
+
 
         game.deal = function () {
             //Initialize values each game
@@ -110,7 +110,7 @@
                 }
             }
             loop.next();
-           
+
 
             game.selectTrump = true;
             game.play();
@@ -165,9 +165,11 @@
                     if (game.currentPlayer.cards.length == 0)
                         end = true;
 
-
                     winCard = null;
-                    game.currentPlayCards = [];
+                    $timeout(function () {
+                        game.currentPlayCards = [];
+                    }, 1000);
+
                 }
 
                 if (!end)
@@ -217,8 +219,8 @@
          * and 'pays' to player score
          */
         game.end = function () {
-            
-            game.currentPlayer =  game.player1.getScore() > game.player2.getScore() ? game.player1 : game.player2;
+
+            game.currentPlayer = game.player1.getScore() > game.player2.getScore() ? game.player1 : game.player2;
             game.results = game.player1.getScore() > game.player2.getScore() ? game.player1.name : game.player2.name;
             game.results += " WINS!";
 

@@ -31,6 +31,9 @@
             <div class="hand">
                 <saathaath-hand cards="game.player2.cards" callback="game.play(card,game.player2)"></saathaath-hand>
             </div>
+            <div style="float:left;">
+                 <saathaath-compare cards="game.currentPlayCards"></saathaath-compare>
+            </div>
             <div class="hand-spacer"></div>
             <div class="player-hand hand">
                 <saathaath-hand cards="game.player1.cards" callback="game.play(card,game.player1)"></saathaath-hand>

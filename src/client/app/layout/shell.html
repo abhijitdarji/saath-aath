@@ -1,5 +1,4 @@
 <md-content>
-
 	<section layout="row">
 		<md-toolbar>
 			<div class="md-toolbar-tools">
@@ -7,6 +6,13 @@
 					<md-icon aria-label="Menu">menu</md-icon>
 				</md-button>
 				<h1> <md-icon aria-label="Phone">games</md-icon>Saath Aath</h1>
+				<span flex></span>
+				<md-button class="md-fab md-mini" aria-label="Restart" ng-click="game.reset()">
+					<md-tooltip md-direction="left">
+						Restart
+					</md-tooltip>
+					<md-icon>replay</md-icon>
+				</md-button>
 			</div>
 		</md-toolbar>
 	</section>
@@ -16,5 +22,4 @@
 		<saathaath-game></saathaath-game>
 
 	</section>
-
 </md-content>

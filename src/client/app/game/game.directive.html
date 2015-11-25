@@ -4,7 +4,9 @@
         <!-- Start Game -->
         <div class="game-results" ng-if="!game.started">
             <div class="result-text">
-                <button class="btn btn-primary" ng-click="game.start()">Start</button>
+                <md-button class="md-raised md-accent" style="line-height: 175px;font-size: 150px;"  
+                ng-click="game.start()">Start
+                </md-button>
             </div>
         </div>
 
@@ -31,10 +33,11 @@
             <div class="hand">
                 <saathaath-hand cards="game.player2.cards" callback="game.play(card,game.player2)"></saathaath-hand>
             </div>
-            <div style="float:left;">
-                 <saathaath-compare cards="game.currentPlayCards"></saathaath-compare>
+            <div class="hand-spacer">
+                <div style="float:left;">
+                <saathaath-compare cards="game.currentPlayCards"></saathaath-compare>
             </div>
-            <div class="hand-spacer"></div>
+            </div>
             <div class="player-hand hand">
                 <saathaath-hand cards="game.player1.cards" callback="game.play(card,game.player1)"></saathaath-hand>
             </div>
@@ -66,7 +69,6 @@
 
         <!-- Actions -->
         <div class="action-bar">
-            <button class="btn btn-primary" ng-click="game.reset()">Restart</button>
         </div>
 
     </div>

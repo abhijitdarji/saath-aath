@@ -172,7 +172,7 @@ html,body { height: 100%;}
 }
 
 .hand-spacer {
-    height: 50px;
+    height: 200px;
 }
 
 /** Cards **/
@@ -181,7 +181,7 @@ html,body { height: 100%;}
     position: relative;
     height: 180px;
     margin-left: 500px;
-    font-size: 8px;
+    font-size: 5px;
 }
 
 @media only screen and (max-width:500px) {
@@ -193,9 +193,8 @@ html,body { height: 100%;}
 .compareCards {
     position: relative;
     height: 400px;
-    margin-top: -90px;
-    margin-left: 300px;
-    font-size: 8px;
+    margin-left: 650px;
+    font-size: 5px;
 }
 
 .compareCards .compare-index-0 {
@@ -208,6 +207,16 @@ html,body { height: 100%;}
     top:10px;
     height: 180px;
     margin-left: 40px;
+}
+
+.generate-columns(12);
+
+.generate-columns(@n, @i: 0) when (@i =< @n) {
+  .card-index-@{i} {
+      position: absolute;
+      left:  100px*@i;
+  }
+  .generate-columns(@n, (@i + 1));
 }
 
 .card {
@@ -362,18 +371,6 @@ html,body { height: 100%;}
   }
 
 }
-
-.generate-columns(12);
-
-.generate-columns(@n, @i: 0) when (@i =< @n) {
-  .card-index-@{i} {
-      position: absolute;
-      left:  150px*@i;
-  }
-  .generate-columns(@n, (@i + 1));
-}
-
-
 
 
 .card.back {

@@ -229,7 +229,7 @@ html,body { height: 100%;}
 .table-cards(@n, @i: 5) when (@i < @n) {
   .card-index-@{i} {
       position: absolute;
-      top: ~`cardem(300)`;
+      top: 100px;
       left:  100px*(@i - 5);
   }
   .table-cards(@n, (@i + 1));
@@ -240,7 +240,7 @@ html,body { height: 100%;}
 .table-top-cards(@n, @i: 10) when (@i < @n) {
   .card-index-@{i} {
       position: absolute;
-      top: ~`cardem(300)`;
+      top: 100px;
       left: 10+ 100px*(@i - 10);
   }
   .table-top-cards(@n, (@i + 1));

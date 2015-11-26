@@ -1,4 +1,4 @@
-<md-card class="card md-whiteframe-3dp {{vm.cardIndexClass}}" ng-class="{'md-whiteframe-15dp' : vm.hoverCard}" ng-if="!vm.card.hideValue" ng-mouseenter="vm.toggleHover()"
+<md-card class="card md-whiteframe-3dp {{vm.cardIndexClass}}" ng-class="{'md-whiteframe-15dp' : vm.hoverCard}" ng-if="vm.card != null && !vm.card.hideValue" ng-mouseenter="vm.toggleHover()"
 ng-mouseleave="vm.toggleHover()" ng-click="vm.onCardSelected()">
 	<div class="card-{{vm.card.rank.name}}" style="color:{{vm.card.suit.color}}">
 		<div class="corner top">
@@ -37,4 +37,4 @@ ng-mouseleave="vm.toggleHover()" ng-click="vm.onCardSelected()">
 		</div>
 	</div>
 </md-card>
-<md-card class="card back" ng-class="vm.cardIndexClass" ng-if="vm.card.hideValue"></md-card>
+<md-card class="card back" ng-class="vm.cardIndexClass" ng-if="vm.card != null && vm.card.hideValue"></md-card>

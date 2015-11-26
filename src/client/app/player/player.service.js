@@ -59,10 +59,13 @@
 
         Player.prototype.playCard = function (card) {
             var playedCard;
-            if (this.cards.indexOf(card) != -1) {
-                playedCard = this.cards.splice(this.cards.indexOf(card), 1);
+            var idx = this.cards.indexOf(card);
+            if (idx != -1) {
+                playedCard = this.cards[idx];
+                this.cards[idx] = null;
+                //playedCard = this.cards.splice(this.cards.indexOf(card), 1);
             }
-            return playedCard[0];
+            return playedCard;
         }
 
         Player.prototype.updateHandsTodo = function (hands) {
@@ -76,6 +79,10 @@
 
         Player.prototype.resetCards = function () {
             this.cards = [];
+        };
+        
+         Player.prototype.cardsLeft = function () {
+            return this.cards.filter(function(n){ return n != undefined }).length;
         };
 
         /**

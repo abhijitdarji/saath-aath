@@ -28,7 +28,7 @@ html,body { height: 100%;}
     background-image: url('../src/client/images/felt.png');
     position: relative;
     padding-top: 50px;
-    height:550px;
+    height:640px;
 }
 
 /** Scoreboard **/
@@ -180,21 +180,22 @@ html,body { height: 100%;}
 .playingCards {
     position: relative;
     height: 180px;
-    margin-left: 500px;
-    font-size: 5px;
+    margin-left: 350px;
+    font-size: 4px;
 }
 
 @media only screen and (max-width:500px) {
 	.playingCards{
-		font-size: 5px;
+		font-size: 2px;
 	}
 }
 
 .compareCards {
     position: relative;
     height: 400px;
-    margin-left: 650px;
-    font-size: 5px;
+    top:50px;
+    margin-left: 350px;
+    font-size: 4px;
 }
 
 .compareCards .compare-index-0 {
@@ -209,14 +210,40 @@ html,body { height: 100%;}
     margin-left: 40px;
 }
 
-.generate-columns(12);
+.hand-cards(5);
 
-.generate-columns(@n, @i: 0) when (@i =< @n) {
+.hand-cards(@n, @i: 0) when (@i < @n) {
+  .card-index-@{i} when (@i = 0) {
+      position: absolute;
+      left:  150px;
+  }
+  .card-index-@{i} when not (@i = 0) {
+      position: absolute;
+      left: 150+ 30px*@i;
+  }
+  .hand-cards(@n, (@i + 1));
+}
+
+.table-cards(10);
+
+.table-cards(@n, @i: 5) when (@i < @n) {
   .card-index-@{i} {
       position: absolute;
-      left:  100px*@i;
+      top: ~`cardem(300)`;
+      left:  100px*(@i - 5);
   }
-  .generate-columns(@n, (@i + 1));
+  .table-cards(@n, (@i + 1));
+}
+
+.table-top-cards(15);
+
+.table-top-cards(@n, @i: 10) when (@i < @n) {
+  .card-index-@{i} {
+      position: absolute;
+      top: ~`cardem(300)`;
+      left: 10+ 100px*(@i - 10);
+  }
+  .table-top-cards(@n, (@i + 1));
 }
 
 .card {

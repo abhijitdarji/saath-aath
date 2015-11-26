@@ -21,6 +21,7 @@
             game.started = false;
             game.showResults = false;
             game.selectTrump = false;
+            game.canPlay = false;
             game.deck = CardService.newDeck();
             game.trump = '';
         };
@@ -58,7 +59,7 @@
                     card = game.deck.deal();
                     player = game.nextPlayer();
 
-                    if (card.rank.name !== 'jack' && card.suit.name !== 'hearts') {
+                    if (card.rank.name !== 'jack' && card.suit.name !== 'heart') {
                         loop.next();
                     }
                     else {
@@ -75,11 +76,11 @@
 
             game.deck.reset();
 
-            game.deal();
+            game.dealHand();
         }
 
 
-        game.deal = function () {
+        game.dealHand = function () {
             //Initialize values each game
 
             game.currentPlayer.changeScore(0);
@@ -106,20 +107,56 @@
                     }
                 },
                 done: function () {
-                    console.log('done');
+                    $timeout(function () {
+                        game.selectTrump = true;
+                    }, 500);
                 }
             }
             loop.next();
 
-
-            game.selectTrump = true;
-            game.play();
+            //game.play();
         };
 
         game.setTrump = function (trump) {
             game.trump = trump;
             game.selectTrump = false;
+            game.dealTable();
         }
+
+        game.dealTable = function () {
+
+            //Deal the cards
+            var i = 0;
+            var loop = {
+                next: function () {
+                    if (i < 10) {
+                        $timeout(function () {
+                            game.hit(false);
+                            game.nextPlayer();
+                            loop.next();
+                        }, 500);
+                        i++;
+                    }
+                    if (i >= 10 && i < 20) {
+                        $timeout(function () {
+                            game.hit(true);
+                            game.nextPlayer();
+                            loop.next();
+                        }, 500);
+                        i++;
+                    }
+                    else {
+                        loop.done();
+                    }
+                },
+                done: function () {
+                    $timeout(function () {
+                        game.canPlay = true;
+                    }, 500);
+                }
+            }
+            loop.next();
+        };
 
         game.getTrumpSuit = function () {
             var suit;
@@ -147,9 +184,17 @@
         game.play = function (card, player) {
             var end = false;
 
-            if (game.currentPlayer === player) {
+            if (game.canPlay && game.currentPlayer === player) {
+
+                var idx = game.currentPlayer.cards.indexOf(card);
 
                 game.currentPlayCards.push(game.currentPlayer.playCard(card))
+
+                console.log(game.currentPlayer.cardsLeft());
+                //show the hidden card when top card is played
+                if (idx > 9 && idx <= 14) {
+                    game.currentPlayer.cards[idx - 5].hideValue = false;
+                }
 
                 if (game.currentPlayCards.length === 2) {
 
@@ -163,7 +208,7 @@
                         game.nextPlayer();
                     }
 
-                    if (game.currentPlayer.cards.length == 0)
+                    if (game.currentPlayer.cardsLeft() == 0)
                         end = true;
 
                     winCard = null;
@@ -173,10 +218,15 @@
 
                 }
 
-                if (!end)
+                if (!end) {
                     game.nextPlayer();
-                else
-                    game.end();
+                }
+                else {
+                    $timeout(function () {
+                        game.end();
+                    }, 500);
+                }
+
             }
 
         }
@@ -210,6 +260,7 @@
                 }, 250);
             }
             else {
+                card.hideValue = true;
                 game.currentPlayer.addCard(card);
                 callback();
             }
@@ -222,7 +273,7 @@
         game.end = function () {
 
             game.currentPlayer = game.player1.getScore() > game.player2.getScore() ? game.player1 : game.player2;
-            game.results = game.player1.getScore() > game.player2.getScore() ? game.player1.name : game.player2.name;
+            game.results = game.currentPlayer.name;
             game.results += " WINS!";
 
             $timeout(function () {

@@ -53,8 +53,9 @@
         };
 
         Player.prototype.addCard = function (card) {
-            if (angular.isObject(card))
+            if (angular.isObject(card)){
                 this.cards.push(card);
+            }
         }
 
         Player.prototype.playCard = function (card) {

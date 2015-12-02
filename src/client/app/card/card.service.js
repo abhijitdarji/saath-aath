@@ -10,36 +10,7 @@
 
 
     function CardService() {
-        var service = {
-            newDeck: newDeck,
-            Deck: Deck,
-            Card: Card
-        };
-
-        ////////////////
-
-        function newDeck() {
-            var deck = new Deck();
-            return deck;
-        }
-
-        function Deck() {
-            var deck = this;
-            this.cards = [];
-            this.dealt = [];
-
-            deck.suits.forEach(function (suit) {
-                deck.ranks.forEach(function (rank) {
-                    if (deck.ignoredCards.indexOf(rank.symbol) === -1 && deck.ignoredCards.indexOf(rank.symbol + suit.name) === -1) {
-                        var card = new Card(rank, suit);
-                        deck.cards.push(card);
-                    }
-                })
-            });
-
-            deck.shuffle();
-        }
-
+        
         var SUIT = {
             club: {
                 name: 'club',
@@ -134,6 +105,40 @@
         };
 
         var RANKS = [RANK.ace, RANK.two, RANK.three, RANK.four, RANK.five, RANK.six, RANK.seven, RANK.eight, RANK.nine, RANK.ten, RANK.jack, RANK.queen, RANK.king];
+
+        ////////////////
+        
+        var service = {
+            newDeck: newDeck,
+            Deck: Deck,
+            Card: Card,
+            Suits: SUITS,
+            Ranks: RANKS
+        };
+
+        ////////////////
+
+        function newDeck() {
+            var deck = new Deck();
+            return deck;
+        }
+
+        function Deck() {
+            var deck = this;
+            this.cards = [];
+            this.dealt = [];
+
+            deck.suits.forEach(function (suit) {
+                deck.ranks.forEach(function (rank) {
+                    if (deck.ignoredCards.indexOf(rank.symbol) === -1 && deck.ignoredCards.indexOf(rank.symbol + suit.name) === -1) {
+                        var card = new Card(rank, suit);
+                        deck.cards.push(card);
+                    }
+                })
+            });
+
+            deck.shuffle();
+        }
 
         Deck.prototype.suits = SUITS;
 

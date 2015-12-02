@@ -1,0 +1,31 @@
+<md-dialog aria-label="Players" ng-cloak>
+	<form name="userForm">
+		<md-toolbar class="md-accent">
+			<div class="md-toolbar-tools">
+				<h2>Players</h2>
+			</div>
+		</md-toolbar>
+		<md-dialog-content style="min-width:200px;min-height:100px;">
+			<div class="md-dialog-content" layout="row">
+				<md-input-container>
+					<label>You</label>
+					<input ng-model="dm.fname" aria-label="You" md-autofocus>
+				</md-input-container>
+				<md-radio-group ng-model="dm.selectedOpponent">
+					<label>Opponent</label>
+					<md-radio-button disabled value="0" class="md-primary">Computer</md-radio-button>
+					<md-radio-button disabled value="1"> Human </md-radio-button>
+					<md-input-container>
+						<input ng-model="dm.sname" aria-label="Opponent" disabled>
+					</md-input-container>
+				</md-radio-group>
+			</div>
+		</md-dialog-content>
+		<div class="md-actions" layout="row">
+			<md-button ng-click="dm.start(dm.fname,dm.sname,dm.selectedOpponent)" ng-class="{'md-raised md-accent': (userForm.$dirty && userForm.$valid)}"
+			ng-disabled="userForm.$pristine || userForm.$invalid">
+				Start
+			</md-button>
+		</div>
+	</form>
+</md-dialog>

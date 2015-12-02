@@ -8,7 +8,8 @@
         'ngAnimate',
         'saathaath.card',
         'saathaath.game',
-        'saathaath.player'
+        'saathaath.player',
+        'saathaath.ai'
     ]).config(function ($mdThemingProvider) {
         $mdThemingProvider.theme('default')
             .primaryPalette('indigo')

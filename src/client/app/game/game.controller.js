@@ -8,9 +8,9 @@
         .module(moduleID)
         .controller(ctrlID, GameController);
 
-    GameController.$inject = ['$timeout', 'PlayerService', 'CardService', 'GameService'];
+    GameController.$inject = ['$timeout', '$mdDialog', '$mdToast', 'PlayerService', 'CardService', 'GameService', 'BrainService'];
 
-    function GameController($timeout, PlayerService, CardService, GameService) {
+    function GameController($timeout, $mdDialog, $mdToast, PlayerService, CardService, GameService, BrainService) {
         var game = this;
 
         /**
@@ -24,14 +24,41 @@
             game.canPlay = false;
             game.deck = CardService.newDeck();
             game.trump = '';
+            game.getNames();
         };
 
+        game.getNames = function () {
+            $mdDialog.show({
+                controller: DialogController,
+                controllerAs: 'dm',
+                templateUrl: 'app/game/dialog.tmpl.html',
+                parent: angular.element(document.body),
+                clickOutsideToClose: false,
+                escapeToClose: false
+            }).then(function (names) {
+                game.start(names.fname, names.sname, names.type);
+            });
+            DialogController.$inject = ['$scope', '$mdDialog'];
+            function DialogController($scope, $mdDialog) {
+                var dm = this;
+                dm.fname;
+                dm.sname = "Computer";
+                dm.selectedOpponent = 0;
+                dm.start = function (fname, sname, type) {
+                    $mdDialog.hide({ fname: fname, sname: sname, type: type });
+                };
+            }
+        }
         /**
          * Starts a game by creating a new player
          */
-        game.start = function () {
-            game.player1 = PlayerService.newPlayer('Player1', 0);
-            game.player2 = PlayerService.newPlayer('Player2', 0);
+        game.start = function (firstPlayer, secondPlayer, opponentType) {
+            game.showMessage('Starting Game!');
+            game.player1 = PlayerService.newPlayer(firstPlayer, 0);
+            game.player2 = PlayerService.newPlayer(secondPlayer, 0);
+            //add brain if computer player
+            if (opponentType == 0) { BrainService.addBrain(game.player2, game); }
+
             game.players = [game.player1, game.player2];
             game.currentPlayer;
             game.currentPlayCards = [];
@@ -50,6 +77,7 @@
         }
 
         game.decide8 = function () {
+            game.showMessage('Deciding 7-8!');
             game.deck.reset();
             var card;
             var player;
@@ -82,7 +110,7 @@
 
         game.dealHand = function () {
             //Initialize values each game
-
+            
             game.currentPlayer.changeScore(0);
 
             //Shuffle before dealing
@@ -108,6 +136,7 @@
                 },
                 done: function () {
                     $timeout(function () {
+                        game.showMessage('The one with 8 selects Trump!');
                         game.selectTrump = true;
                     }, 500);
                 }
@@ -118,9 +147,9 @@
         };
 
         game.setTrump = function (trump) {
-            game.trump = trump;
-            game.selectTrump = false;
-            game.dealTable();
+                game.trump = trump;
+                game.selectTrump = false;
+                game.dealTable();
         }
 
         game.dealTable = function () {
@@ -152,7 +181,7 @@
                 done: function () {
                     $timeout(function () {
                         game.canPlay = true;
-                    }, 500);
+                    }, 8000);
                 }
             }
             loop.next();
@@ -190,7 +219,6 @@
 
                 game.currentPlayCards.push(game.currentPlayer.playCard(card))
 
-                console.log(game.currentPlayer.cardsLeft());
                 //show the hidden card when top card is played
                 if (idx > 9 && idx <= 14) {
                     game.currentPlayer.cards[idx - 5].hideValue = false;
@@ -202,18 +230,26 @@
 
                     if (winCard == game.currentPlayCards[0]) {
                         game.players[0].changeScore(1);
+                        game.showMessage(game.players[0].name + ' got the hand!');
                     }
                     else {
                         game.currentPlayer.changeScore(1);
-                        game.nextPlayer();
+                        game.showMessage(game.currentPlayer.name + ' got the hand!');
+                        $timeout(function () {
+                            game.nextPlayer();
+                        }, 1200);
+                        //game.nextPlayer();
                     }
 
                     if (game.currentPlayer.cardsLeft() == 0)
                         end = true;
 
                     winCard = null;
+                    game.canPlay = false;
+
                     $timeout(function () {
                         game.currentPlayCards = [];
+                        game.canPlay = true;
                     }, 1000);
 
                 }
@@ -280,6 +316,37 @@
                 game.showResults = true;
             }, 500);
         };
+
+        game.showMessage = function (msg) {
+            $mdToast.show(
+                $mdToast.simple()
+                    .content(msg)
+                    .position('top right')
+                    .hideDelay(1000)
+                );
+        }
+
+        game.showRules = function () {
+            var alert = $mdDialog.alert({
+                title: 'Game Rules!',
+                content: '<p>1) In this game 30 card will be used out of 52 cards in the deck.<br/>'
+                + '   2) Selected cards are 7 to King and Ace of hearts and spade and 8 to King and Ace of diamonds and clubs.<br/>'
+                + '   3) Then we decide who would make 7 sets and 8 sets.<br/>'
+                + '   4) Then we give 5 cards to each and the person making 8 sets decides the trump.<br/>'
+                + '   5) Then the rest of the cards are distributed.The player who has to make 8 sets plays the first card.<br/>'
+                + '   6) Other player has to play the same type of card played by the 1st player or if he does not have that type of card then he can play the trump card.<br/>'
+                + '   7) Whoever’s card is the highest wins that set.<br/>'
+                + '   8) Player who has won the last set continues the game by playing card of his choice.<br/>'
+                + '   9) If both player plays the trump card then the higher card wins the set.<br/>'
+                + '  10) If the player for e.g.who has to make 8 sets could make only 6 then in the next round he needs to give 2 sets which he wins in that round to his opponent.Or he can allow the other player to take 2 cards randomly from his cards and take back the card which he' + '   gives.</p>',
+                ok: 'Close'
+            });
+            $mdDialog
+                .show(alert)
+                .finally(function () {
+                    alert = undefined;
+                });
+        }
 
         /**
          * Resets our player's score and re-inits

@@ -1,14 +1,7 @@
-<div>
+<div layout-fill >
     <!-- Card Table -->
     <div class="card-table">
         <!-- Start Game -->
-        <div class="game-results" ng-if="!game.started">
-            <div class="result-text">
-                <md-button class="md-raised md-accent" style="line-height: 175px;font-size: 150px;"  
-                ng-click="game.start()">Start
-                </md-button>
-            </div>
-        </div>
 
         <!-- Game Results -->
         <div class="game-results" ng-if="game.showResults">

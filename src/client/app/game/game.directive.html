@@ -1,8 +1,8 @@
-<div layout-fill >
+<div layout-fill>
     <!-- Card Table -->
     <div class="card-table">
         <!-- Start Game -->
-
+        
         <!-- Game Results -->
         <div class="game-results" ng-if="game.showResults">
             <div class="result-text">
@@ -14,10 +14,11 @@
         <div class="select-trump" ng-if="game.selectTrump">
             <div class="title">:Select Trump:</div>
             <div class="trump-text">
-                <span ng-click="game.setTrump('&clubs;')">&clubs;</span>
-                <span style="color:red;" ng-click="game.setTrump('&diams;')">&diams;</span>
-                <span ng-click="game.setTrump('&spades;')">&spades;</span>
-                <span style="color:red;" ng-click="game.setTrump('&hearts;')">&hearts;</span>
+                
+                <span ng-repeat="suit in game.suits" ng-click="game.setTrump(suit)" ng-style="['&diams;','&hearts;'].indexOf(suit.symbol) > -1 ? {color:'red'}:{color:'black'}">
+                {{suit.symbol}}
+                </span>
+                
             </div>
         </div>
 
@@ -28,8 +29,8 @@
             </div>
             <div class="hand-spacer">
                 <div style="float:left;">
-                <saathaath-compare cards="game.currentPlayCards"></saathaath-compare>
-            </div>
+                    <saathaath-compare cards="game.currentPlayCards"></saathaath-compare>
+                </div>
             </div>
             <div class="player-hand hand">
                 <saathaath-hand cards="game.player1.cards" callback="game.play(card,game.player1)"></saathaath-hand>
@@ -47,7 +48,7 @@
         </div>
         <div class="gametrump" ng-if="game.started && game.trump">
             <p class="title">Trump</p>
-            <p class="detail" ng-style="['&diams;','&hearts;'].indexOf(game.trump) > -1 ? {color:'red'}:{color:'black'}">{{game.trump}}</p>
+            <p class="detail" ng-style="['&diams;','&hearts;'].indexOf(game.trump.symbol) > -1 ? {color:'red'}:{color:'black'}">{{game.trump.symbol}}</p>
         </div>
         <div class="scoreboard2" ng-if="game.started" ng-class="{scorecontent: game.currentPlayer === game.player2}">
             <p class="title">Player:</p>

@@ -23,6 +23,7 @@
             game.selectTrump = false;
             game.canPlay = false;
             game.deck = CardService.newDeck();
+            game.suits = CardService.Suits;
             game.trump = '';
             game.getNames();
         };
@@ -187,29 +188,6 @@
             loop.next();
         };
 
-        game.getTrumpSuit = function () {
-            var suit;
-            //UTF-8 character value
-            switch (escape(game.trump)) {
-                case '%u2663':
-                    suit = 'club'
-                    break;
-                case '%u2666':
-                    suit = 'diamond'
-                    break;
-                case '%u2660':
-                    suit = 'spade'
-                    break;
-                case '%u2665':
-                    suit = 'heart'
-                    break;
-                default:
-                    break;
-            }
-
-            return suit;
-        }
-
         game.play = function (card, player) {
             var end = false;
 
@@ -226,7 +204,7 @@
 
                 if (game.currentPlayCards.length === 2) {
 
-                    var winCard = GameService.checkWinningCard(game.currentPlayCards[0], game.currentPlayCards[1], game.getTrumpSuit());
+                    var winCard = GameService.checkWinningCard(game.currentPlayCards[0], game.currentPlayCards[1], game.trump);
 
                     if (winCard == game.currentPlayCards[0]) {
                         game.players[0].changeScore(1);

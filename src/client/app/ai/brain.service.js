@@ -8,9 +8,9 @@
         .module(moduleID)
         .factory(factID, BrainService);
 
-    BrainService.$inject = ['$rootScope', '$timeout', 'CardService'];
+    BrainService.$inject = ['$rootScope', '$timeout'];
 
-    function BrainService($rootScope, $timeout, CardService) {
+    function BrainService($rootScope, $timeout) {
         var service = {
             addBrain: addBrain
         };
@@ -58,7 +58,7 @@
                 if (game.selectTrump && player.getHandsTodo() == 8) {
 
                     $timeout(function () {
-                        var trump = player.decideTrump();
+                        var trump = player.decideTrump(game.suits);
                         game.setTrump(trump);
                     }, 1500);
 
@@ -77,10 +77,10 @@
             return card;
         }
 
-        Brain.prototype.decideTrump = function () {
+        Brain.prototype.decideTrump = function (suits) {
             var suit;
-            suit = CardService.Suits[Math.floor(Math.random() * CardService.Suits.length)];
-            return suit.symbol;
+            suit = suits[Math.floor(Math.random() * suits.length)];
+            return suit;
         }
 
         return service;

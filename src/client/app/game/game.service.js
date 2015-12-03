@@ -20,13 +20,13 @@
        
         function checkWinningCard(cardA, cardB, trump) {
 
-            if (cardA.suit.name === trump && cardB.suit.name !== trump) {
+            if (cardA.suit === trump && cardB.suit !== trump) {
                 return cardA;
             }
-            else if (cardA.suit.name !== trump && cardB.suit.name === trump) {
+            else if (cardA.suit !== trump && cardB.suit === trump) {
                 return cardB;
             }
-            else if (cardB.suit.name !== cardA.suit.name) {
+            else if (cardB.suit !== cardA.suit) {
                 return cardA;
             }
             else {

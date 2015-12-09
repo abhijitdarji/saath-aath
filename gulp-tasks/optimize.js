@@ -50,6 +50,18 @@ module.exports = function (args, gulp, $, config, util) {
 		// 			return content.replace('/src/client/','/');
 		// 		}
 		// 	}))
+		// Minify HTML and inline CSS preserving custom google comments
+			.pipe($.if('*.html', $.htmlmin({
+				collapseWhitespace: true,
+				removeComments: true,
+				minifyCSS: true,
+				// ignore GA comments
+				ignoreCustomComments: [
+					/^\s+Google/,
+					/^\s+End Google/
+				]
+			}
+				)))
 			.pipe(gulp.dest(config.build));
 	};
 };

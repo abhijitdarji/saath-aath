@@ -75,30 +75,31 @@ html,body { height: 100%;}
     font-family: 'Lora', serif;
     text-align: center;
     padding: 20px 0;
-}
-
-.gametrump .title{
+    
+    .title{
     font-size: 15px;
-}
-
-.gametrump .detail{
-    line-height: 50px;
-    font-size: 50px;
+    }
+    
+    .detail{
+        line-height: 50px;
+        font-size: 50px;
+    }
 }
 
 .scorecontent{
     border-style: solid;
     border-color: red;
+    
+    .title {
+        font-size: 15px;
+    }
+
+    .detail {
+        font-size: 18px;
+        font-weight: bold;
+    }
 }
 
-.scorecontent .title {
-    font-size: 15px;
-}
-
-.scorecontent .detail {
-    font-size: 18px;
-    font-weight: bold;
-}
 
 /** Results **/
 
@@ -108,18 +109,18 @@ html,body { height: 100%;}
     top: 175px;
     position: absolute;
     background-image: url('../src/client/images/debut-dark.png');
-
+    
+    .result-text {
+        font-family: 'Lora', serif;
+        color: white;
+        line-height: 175px;
+        font-size: 150px;
+        text-shadow: 2px 2px #ff0000;
+        text-align: center;
+        opacity: 1.0;
+    }
 }
 
-.game-results .result-text {
-    font-family: 'Lora', serif;
-    color: white;
-    line-height: 175px;
-    font-size: 150px;
-    text-shadow: 2px 2px #ff0000;
-    text-align: center;
-    opacity: 1.0;
-}
 
 /** Trump Select **/
 
@@ -130,25 +131,26 @@ html,body { height: 100%;}
     position: absolute;
     background-image: url('../src/client/images/debut-dark.png');
 
+    .title {
+        font-family: 'Lora', serif;
+        color: white;
+        line-height: 25px;
+        font-size: 25px;
+        text-align: center;
+        opacity: 1.0;
+    }
+    
+    .trump-text {
+        font-family: 'Lora', serif;
+        color: black;
+        line-height: 175px;
+        font-size: 150px;
+        text-align: center;
+        opacity: 1.0;
+    }
+
 }
 
-.select-trump .title {
-    font-family: 'Lora', serif;
-    color: white;
-    line-height: 25px;
-    font-size: 25px;
-    text-align: center;
-    opacity: 1.0;
-}
-
-.select-trump .trump-text {
-    font-family: 'Lora', serif;
-    color: black;
-    line-height: 175px;
-    font-size: 150px;
-    text-align: center;
-    opacity: 1.0;
-}
 
 /** Actions **/
 
@@ -159,11 +161,11 @@ html,body { height: 100%;}
     right: 25%;
     margin: 0 auto;
     height: 50px;
+    
+    button {
+        height: 50px;
+    }
 
-}
-
-.action-bar button {
-    height: 50px;
 }
 
 /** Hands **/
@@ -196,19 +198,20 @@ html,body { height: 100%;}
     top:50px;
     margin-left: 350px;
     font-size: 4px;
+    
+    .compare-index-0 {
+        position: relative;
+        height: 180px;
+    }
+
+    .compare-index-1 {
+        position: relative;
+        top:10px;
+        height: 180px;
+        margin-left: 40px;
+    }
 }
 
-.compareCards .compare-index-0 {
-    position: relative;
-    height: 180px;
-}
-
-.compareCards .compare-index-1 {
-    position: relative;
-    top:10px;
-    height: 180px;
-    margin-left: 40px;
-}
 
 .hand-cards(5);
 
